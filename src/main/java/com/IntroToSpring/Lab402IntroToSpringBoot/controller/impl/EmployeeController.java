@@ -14,26 +14,26 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class EmployeeController {
     @Autowired
-    EmployeeRepository employeeRepository;
+    private EmployeeRepository employeeRepository;
 
     @GetMapping("/employees")
     public List<Employee> getAllDoctors() {
         return employeeRepository.findAll();
     }
 
-    @GetMapping("/employees/{employeeId}")
-    public Employee getEmployeeById(@PathVariable Long employeeId) {
-        Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
-        if (employeeOptional.isEmpty()) return null;
-        return employeeOptional.get();
+    @GetMapping("/employees/{id}")
+    public Optional<Employee> getDoctorById(@PathVariable Long id) {
+        return employeeRepository.findById(id);
     }
 
-    @GetMapping("/employees/{status}")
-    public List<Employee> getEmployeeByStatus(@PathVariable String status) {
+    @GetMapping("/employees/status/{status}")
+    public List<Employee> getDoctorsByStatus(@PathVariable String status) {
         return employeeRepository.findByStatus(status);
     }
 
-
-
+    @GetMapping("/employees/department/{department}")
+    public List<Employee> getDoctorsByDepartment(@PathVariable String department) {
+        return employeeRepository.findByDepartment(department);
+    }
 
 }
